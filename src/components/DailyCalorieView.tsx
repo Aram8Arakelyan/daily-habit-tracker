@@ -46,13 +46,12 @@ export default function DailyCalorieView() {
             Today&apos;s Calories
           </h2>
           <p className="text-sm text-zinc-500">
-            {stats.totalCalories} / {stats.goal} cal
+            {stats.totalCalories} / {stats.goal || 2000} cal
           </p>
         </div>
         <ProgressRing
           completed={stats.totalCalories}
-          total={stats.goal}
-          label="cal"
+          total={stats.goal || 2000}
         />
       </div>
 
@@ -144,7 +143,7 @@ export default function DailyCalorieView() {
             <div className="rounded-lg bg-zinc-800/50 px-3 py-2">
               <p className="text-xs text-zinc-500">Remaining</p>
               <p className="text-lg font-medium text-zinc-100">
-                {Math.max(0, stats.goal - stats.totalCalories)}
+                {Math.max(0, (stats.goal || 2000) - stats.totalCalories)}
               </p>
             </div>
             <div className="rounded-lg bg-zinc-800/50 px-3 py-2">
