@@ -22,14 +22,18 @@ export default function FoodSearch({ onSelect }: FoodSearchProps) {
 
     try {
       const response = await searchFoods(query, 10);
-      if (response) {
+      if (response && response.foods && response.foods.length > 0) {
         const foods = response.foods.map(parseFoodItem);
         setResults(foods);
+      } else if (response && response.foods && response.foods.length === 0) {
+        setError("No foods found. Try a different search term.");
       } else {
-        setError("No results found");
+        setError("Search failed. Check your API key and try again.");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Search failed");
+      const errorMsg = err instanceof Error ? err.message : "Search failed";
+      setError(`Error: ${errorMsg}. Make sure your API key is valid.`);
+      console.error("Food search error:", err);
     } finally {
       setLoading(false);
     }

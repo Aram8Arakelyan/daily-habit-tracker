@@ -17,6 +17,7 @@ import DailyCalorieView from "@/components/DailyCalorieView";
 import CalorieGoalForm from "@/components/CalorieGoalForm";
 import CalorieStats from "@/components/CalorieStats";
 import USDAApiKeySetup from "@/components/USDAApiKeySetup";
+import TestApiKey from "@/components/TestApiKey";
 
 export default function Home() {
   const {
@@ -224,6 +225,7 @@ export default function Home() {
             <h2 className="text-xl font-bold text-zinc-100">Calorie Tracking</h2>
             <USDAApiKeySetup />
           </div>
+          <TestApiKey />
           <CalorieGoalForm />
           <DailyCalorieView />
           <CalorieStats />

@@ -40,16 +40,26 @@ export async function searchFoods(
       api_key: apiKey,
     });
 
-    const response = await fetch(`${USDA_BASE_URL}/foods/search?${params}`);
+    const url = `${USDA_BASE_URL}/foods/search?${params}`;
+    console.log("Fetching from USDA API:", url.replace(apiKey, "***"));
+
+    const response = await fetch(url);
+
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+      const errorText = await response.text();
+      console.error("API error response:", errorText);
+      if (response.status === 403) {
+        throw new Error(`Invalid API key. Please check your key and try again.`);
+      }
+      throw new Error(`API error (${response.status}): ${errorText || response.statusText}`);
     }
 
     const data = await response.json();
+    console.log("API response:", data);
     return data;
   } catch (error) {
     console.error("Error searching foods:", error);
-    return null;
+    throw error; // Re-throw so FoodSearch can display it
   }
 }
 
